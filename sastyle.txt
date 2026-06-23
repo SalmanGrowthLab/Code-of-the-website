@@ -1,0 +1,17 @@
+import gradio as gr
+import os
+
+# Read from environment or fallback
+framework = os.getenv("FRAMEWORK", "PyTorch")
+
+def show_info():
+    return f"Framework: {framework}"
+
+demo = gr.Interface(
+    fn=show_info,
+    inputs=[],
+    outputs="text",
+    title="DeepSite Project"
+)
+
+demo.launch()

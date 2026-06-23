@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salman Growth Lab — The Ultimate Digital Growth Vault</title>
+<meta name="description" content="A Private Digital Vault Of Premium Courses, Assets, Templates, Business Systems, AI Resources, Growth Frameworks And Elite Knowledge.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        vault: { bg:'#040404', sec:'#0A0A0A', elev:'#111111', card:'#161618', gold:'#D4A96A', lgold:'#E7C589', text:'#F5F0E6', muted:'#A39C91', border:'#2A2A2C', platin:'#86868B', silver:'#F5F5F7' },
+      },
+      fontFamily: { display:['DM Serif Display','serif'], body:['Inter','sans-serif'] },
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+::selection{background:#D4A96A;color:#040404}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#040404}
+::-webkit-scrollbar-thumb{background:#2A2A2C;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#D4A96A}
+html{scroll-behavior:auto}
+body{background:#040404;color:#F5F0E6;font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* Loader */
+#loader{position:fixed;inset:0;z-index:9999;background:#040404;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px}
+#loader .loader-line{width:120px;height:1px;background:#2A2A2C;position:relative;overflow:hidden}
+#loader .loader-line::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:#D4A96A;animation:loaderSlide 1.5s ease-in-out infinite}
+@keyframes loaderSlide{0%{left:-100%}50%{left:0}100%{left:100%}}
+#loader .loader-text{font-family:'DM Serif Display',serif;color:#D4A96A;font-size:1.2rem;letter-spacing:0.15em;text-transform:uppercase;opacity:0;animation:loaderFade 0.8s 0.3s forwards}
+@keyframes loaderFade{to{opacity:1}}
+
+/* Custom Cursor */
+.cursor-dot{width:6px;height:6px;background:#D4A96A;border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:transform 0.1s}
+.cursor-ring{width:36px;height:36px;border:1px solid rgba(212,169,106,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9997;transition:transform 0.15s,width 0.3s,height 0.3s,border-color 0.3s}
+.cursor-ring.hovering{width:50px;height:50px;border-color:#D4A96A}
+
+/* Noise Overlay */
+#noise{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:0.03;mix-blend-mode:overlay}
+#noise svg{width:100%;height:100%}
+
+/* Vignette */
+#vignette{position:fixed;inset:0;z-index:8999;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(4,4,4,0.7) 100%)}
+
+/* Scroll Progress */
+#scrollProgress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D4A96A,#E7C589);z-index:9990;width:0;transition:width 0.1s}
+
+/* Shimmer Text */
+.shimmer-text{background:linear-gradient(105deg,#F5F0E6 0%,#D4A96A 25%,#E7C589 50%,#D4A96A 75%,#F5F0E6 100%);background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Reveal Animation */
+.reveal{opacity:0;transform:translateY(40px)}
+.reveal.active{opacity:1;transform:translateY(0);transition:all 0.9s cubic-bezier(0.22,1,0.36,1)}
+
+/* Card Glow Border */
+.glow-border{position:relative;overflow:hidden}
+.glow-border::before{content:'';position:absolute;inset:-2px;border-radius:inherit;background:conic-gradient(from var(--angle,0deg),transparent 60%,#D4A96A 80%,transparent 100%);opacity:0;transition:opacity 0.5s;z-index:-1}
+.glow-border:hover::before{opacity:1;animation:rotateBorder 2s linear infinite}
+@keyframes rotateBorder{to{--angle:360deg}}
+@property --angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+/* Glass */
+.glass{background:rgba(22,22,24,0.6);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid rgba(42,42,44,0.6)}
+
+/* Magnetic Button */
+.magnetic-btn{transition:transform 0.3s cubic-bezier(0.22,1,0.36,1)}
+
+/* Shake */
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.shake{animation:shake 0.5s ease-in-out}
+
+/* Float */
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(2deg)}}
+
+/* Pulse Gold */
+@keyframes pulseGold{0%,100%{box-shadow:0 0 0 0 rgba(212,169,106,0.3)}50%{box-shadow:0 0 20px 4px rgba(212,169,106,0.15)}}
+
+/* Stagger children */
+.stagger-children > *{opacity:0;transform:translateY(20px)}
+
+/* Collection card hover */
+.collection-card{transition:all 0.5s cubic-bezier(0.22,1,0.36,1)}
+.collection-card:hover{transform:translateY(-8px);border-color:rgba(212,169,106,0.3)}
+.collection-card:hover .card-glow{opacity:1}
+.card-glow{position:absolute;inset:0;opacity:0;transition:opacity 0.5s;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,169,106,0.06) 0%,transparent 60%);pointer-events:none;border-radius:inherit}
+
+/* Premium input */
+.premium-input{background:rgba(22,22,24,0.8);border:1px solid #2A2A2C;color:#F5F0E6;transition:all 0.3s ease;outline:none}
+.premium-input:focus{border-color:#D4A96A;box-shadow:0 0 0 1px rgba(212,169,106,0.2)}
+.premium-input.error{border-color:#ef4444;box-shadow:0 0 0 1px rgba(239,68,68,0.3)}
+.premium-input::placeholder{color:#A39C91}
+
+/* Modal overlay */
+.modal-overlay{position:fixed;inset:0;z-index:9500;background:rgba(4,4,4,0.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal-content{animation:modalIn 0.5s cubic-bezier(0.22,1,0.36,1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(30px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* WhatsApp Float */
+.whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:9400;animation:pulseGold 2s infinite}
+
+/* Section divider */
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,#2A2A2C,transparent)}
+
+/* Hero floating elements */
+.hero-float{position:absolute;opacity:0.08;animation:float 6s ease-in-out infinite;pointer-events:none}
+
+/* Particle canvas */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* Ambient glow */
+.ambient-glow{position:fixed;top:-30%;left:50%;transform:translateX(-50%);width:80vw;height:60vh;background:radial-gradient(ellipse,rgba(212,169,106,0.04) 0%,transparent 70%);pointer-events:none;z-index:1}
+
+/* Featured collection cinematic hover */
+.featured-card{position:relative;overflow:hidden;transition:all 0.6s cubic-bezier(0.22,1,0.36,1)}
+.featured-card:hover{transform:scale(1.02)}
+.featured-card .featured-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(4,4,4,0.9) 100%);transition:all 0.5s}
+.featured-card:hover .featured-overlay{background:linear-gradient(180deg,transparent 10%,rgba(4,4,4,0.95) 100%)}
+.featured-card .featured-shine{position:absolute;top:-100%;left:-100%;width:300%;height:300%;background:linear-gradient(105deg,transparent 40%,rgba(212,169,106,0.05) 50%,transparent 60%);transition:all 0.8s;pointer-events:none}
+.featured-card:hover .featured-shine{transform:translateX(30%) translateY(30%)}
+
+/* Mobile nav */
+.mobile-nav{position:fixed;inset:0;z-index:9450;background:rgba(4,4,4,0.98);backdrop-filter:blur(20px);transform:translateX(100%);transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)}
+.mobile-nav.open{transform:translateX(0)}
+
+/* Success animation */
+@keyframes successPulse{0%{transform:scale(0);opacity:0}50%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+.success-check{animation:successPulse 0.6s cubic-bezier(0.22,1,0.36,1) forwards}
+
+/* Counter animation */
+.counter-number{display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-text">Salman Growth Lab</div>
+  <div class="loader-line"></div>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor-dot hidden md:block" id="cursorDot"></div>
+<div class="cursor-ring hidden md:block" id="cursorRing"></div>
+
+<!-- Noise Overlay -->
+<div id="noise">
+  <svg><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#noiseFilter)"/></svg>
+</div>
+
+<!-- Vignette -->
+<div id="vignette"></div>
+
+<!-- Ambient Glow -->
+<div class="ambient-glow"></div>
+
+<!-- Particles -->
+<canvas id="particles"></canvas>
+
+<!-- Scroll Progress -->
+<div id="scrollProgress"></div>
+
+<!-- ==================== NAVIGATION ==================== -->
+<nav id="mainNav" class="fixed top-0 left-0 w-full z-[9300] transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group" onclick="scrollToSection('hero')">
+        <div class="w-8 h-8 rounded-lg bg-vault-gold/10 border border-vault-gold/30 flex items-center justify-center">
+          <span class="font-display text-vault-gold text-sm">S</span>
+        </div>
+        <span class="font-display text-vault-text text-lg tracking-wide hidden sm:block">Salman Growth Lab</span>
+      </a>
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="#collections" class="text-vault-muted hover:text-vault-gold transition-colors text-sm tracking-wide">Collections</a>
+        <a href="#featured" class="text-vault-muted hover:text-vault-gold transition-colors text-sm tracking-wide">Featured</a>
+        <a href="#value" class="text-vault-muted hover:text-vault-gold transition-colors text-sm tracking-wide">Value</a>
+        <a href="#contact" class="text-vault-muted hover:text-vault-gold transition-colors text-sm tracking-wide">Contact</a>
+        <button onclick="openModal('authModal');setAuthTab('signin')" class="text-vault-muted hover:text-vault-gold transition-colors text-sm tracking-wide">Sign In</button>
+        <button onclick="openModal('authModal');setAuthTab('signup')" class="magnetic-btn px-5 py-2 bg-vault-gold text-vault-bg text-sm font-semibold rounded-lg hover:bg-vault-lgold transition-all">Enter Vault</button>
+      </div>
+      <!-- Mobile Hamburger -->
+      <button id="mobileMenuBtn" class="lg:hidden text-vault-text" onclick="toggleMobileNav()">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="flex flex-col h-full p-8">
+    <div class="flex justify-between items-center mb-12">
+      <span class="font-display text-vault-gold text-xl">Menu</span>
+      <button onclick="toggleMobileNav()" class="text-vault-text"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="flex flex-col gap-6 text-2xl font-display">
+      <a href="#collections" onclick="toggleMobileNav()" class="text-vault-text hover:text-vault-gold transition-colors">Collections</a>
+      <a href="#featured" onclick="toggleMobileNav()" class="text-vault-text hover:text-vault-gold transition-colors">Featured</a>
+      <a href="#value" onclick="toggleMobileNav()" class="text-vault-text hover:text-vault-gold transition-colors">Value</a>
+      <a href="#contact" onclick="toggleMobileNav()" class="text-vault-text hover:text-vault-gold transition-colors">Contact</a>
+      <div class="section-divider my-4"></div>
+      <button onclick="toggleMobileNav();openModal('authModal');setAuthTab('signin')" class="text-left text-vault-muted hover:text-vault-gold transition-colors">Sign In</button>
+      <button onclick="toggleMobileNav();openModal('authModal');setAuthTab('signup')" class="magnetic-btn px-6 py-3 bg-vault-gold text-vault-bg font-semibold rounded-lg text-center mt-4">Enter The Vault</button>
+    </div>
+    <div class="mt-auto pt-8 border-t border-vault-border">
+      <p class="text-vault-muted text-sm">WhatsApp: 03439114135</p>
+      <p class="text-vault-muted text-sm mt-1">salmanmaseed2168@gmail.com</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+  <!-- Hero Background Effects -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-vault-gold/[0.03] rounded-full blur-[120px]"></div>
+    <div class="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-vault-gold/[0.02] rounded-full blur-[80px]"></div>
+  </div>
+  <!-- Floating Elements -->
+  <div class="hero-float top-[15%] left-[10%] text-vault-gold text-6xl font-display" style="animation-delay:0s">K</div>
+  <div class="hero-float top-[25%] right-[12%] text-vault-gold/60 text-4xl font-display" style="animation-delay:1.5s">∞</div>
+  <div class="hero-float bottom-[20%] left-[15%] text-vault-gold/40 text-5xl font-display" style="animation-delay:3s">◆</div>
+  <div class="hero-float bottom-[30%] right-[8%] text-vault-gold/30 text-7xl font-display" style="animation-delay:2s">λ</div>
+  <div class="hero-float top-[60%] left-[50%] text-vault-gold/20 text-3xl font-display" style="animation-delay:4s">Ω</div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+    <!-- Label -->
+    <div class="reveal mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-vault-gold/20 bg-vault-gold/5">
+      <div class="w-1.5 h-1.5 rounded-full bg-vault-gold animate-pulse"></div>
+      <span class="text-vault-gold text-xs tracking-[0.2em] uppercase font-medium">Private Access Only</span>
+    </div>
+    <!-- Main Headline -->
+    <h1 class="reveal font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-6">
+      <span class="shimmer-text">SALMAN</span><br>
+      <span class="text-vault-text">GROWTH LAB</span>
+    </h1>
+    <!-- Subheadline -->
+    <p class="reveal text-vault-muted text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-light">
+      A Private Digital Vault Of Premium Courses, Assets, Templates, Business Systems, AI Resources, Growth Frameworks And Elite Knowledge.
+    </p>
+    <!-- CTAs -->
+    <div class="reveal flex flex-col sm:flex-row items-center justify-center gap-4">
+      <button onclick="scrollToSection('collections')" class="magnetic-btn group px-8 py-4 bg-vault-gold text-vault-bg font-semibold rounded-xl hover:bg-vault-lgold transition-all text-sm tracking-wider uppercase flex items-center gap-3">
+        <span>Enter The Vault</span>
+        <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+      </button>
+      <button onclick="scrollToSection('collections')" class="magnetic-btn px-8 py-4 border border-vault-border text-vault-text rounded-xl hover:border-vault-gold/40 hover:text-vault-gold transition-all text-sm tracking-wider uppercase">
+        Explore Collections
+      </button>
+    </div>
+    <!-- Scroll Indicator -->
+    <div class="reveal mt-16 md:mt-24 flex flex-col items-center gap-2 opacity-40">
+      <span class="text-vault-muted text-[10px] tracking-[0.3em] uppercase">Scroll</span>
+      <div class="w-px h-8 bg-gradient-to-b from-vault-gold/60 to-transparent"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TRUST STATS ==================== -->
+<section class="relative z-10 py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="section-divider mb-16"></div>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-4 text-center">
+      <div class="reveal">
+        <div class="font-display text-3xl md:text-5xl text-vault-gold counter-number" data-target="1000">0</div>
+        <div class="text-vault-muted text-xs tracking-widest uppercase mt-2">Premium Resources</div>
+      </div>
+      <div class="reveal">
+        <div class="font-display text-3xl md:text-5xl text-vault-gold counter-number" data-target="100">0</div>
+        <div class="text-vault-muted text-xs tracking-widest uppercase mt-2">Learning Systems</div>
+      </div>
+      <div class="reveal">
+        <div class="font-display text-3xl md:text-5xl text-vault-text">∞</div>
+        <div class="text-vault-muted text-xs tracking-widest uppercase mt-2">Lifetime Access</div>
+      </div>
+      <div class="reveal">
+        <div class="font-display text-3xl md:text-5xl text-vault-text">24/7</div>
+        <div class="text-vault-muted text-xs tracking-widest uppercase mt-2">Always Available</div>
+      </div>
+      <div class="reveal col-span-2 md:col-span-1">
+        <div class="font-display text-3xl md:text-5xl text-vault-gold">★</div>
+        <div class="text-vault-muted text-xs tracking-widest uppercase mt-2">Premium Vault</div>
+      </div>
+    </div>
+    <div class="section-divider mt-16"></div>
+  </div>
+</section>
+
+<!-- ==================== VALUE PILLARS ==================== -->
+<section id="value" class="relative z-10 py-16 md:py-32">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 md:mb-24">
+      <span class="reveal text-vault-gold text-xs tracking-[0.3em] uppercase font-medium">The Framework</span>
+      <h2 class="reveal font-display text-3xl sm:text-4xl md:text-6xl text-vault-text mt-4">Three Pillars of Growth</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+      <!-- Knowledge -->
+      <div class="reveal glass rounded-2xl p-8 md:p-10 group hover:border-vault-gold/30 transition-all duration-500">
+        <div class="text-vault-gold/20 font-display text-7xl md:text-8xl mb-4">01</div>
+        <h3 class="font-display text-2xl md:text-3xl text-vault-text mb-4">Knowledge</h3>
+        <div class="section-divider my-4"></div>
+        <ul class="space-y-3 text-vault-muted text-sm font-light">
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Premium Courses</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Business Systems</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Marketing Education</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>AI Mastery</li>
+        </ul>
+      </div>
+      <!-- Assets -->
+      <div class="reveal glass rounded-2xl p-8 md:p-10 group hover:border-vault-gold/30 transition-all duration-500 md:mt-12">
+        <div class="text-vault-gold/20 font-display text-7xl md:text-8xl mb-4">02</div>
+        <h3 class="font-display text-2xl md:text-3xl text-vault-text mb-4">Assets</h3>
+        <div class="section-divider my-4"></div>
+        <ul class="space-y-3 text-vault-muted text-sm font-light">
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Templates</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Graphics & Icons</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Resource Bundles</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Motion Packs</li>
+        </ul>
+      </div>
+      <!-- Growth -->
+      <div class="reveal glass rounded-2xl p-8 md:p-10 group hover:border-vault-gold/30 transition-all duration-500">
+        <div class="text-vault-gold/20 font-display text-7xl md:text-8xl mb-4">03</div>
+        <h3 class="font-display text-2xl md:text-3xl text-vault-text mb-4">Growth</h3>
+        <div class="section-divider my-4"></div>
+        <ul class="space-y-3 text-vault-muted text-sm font-light">
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>YouTube & SEO</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Affiliate Marketing</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Freelancing & Ecommerce</li>
+          <li class="flex items-center gap-2"><span class="w-1 h-1 bg-vault-gold rounded-full"></span>Personal Branding</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ALL COLLECTIONS ==================== -->
+<section id="collections" class="relative z-10 py-16 md:py-32">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 md:mb-24">
+      <span class="reveal text-vault-gold text-xs tracking-[0.3em] uppercase font-medium">The Vault</span>
+      <h2 class="reveal font-display text-3xl sm:text-4xl md:text-6xl text-vault-text mt-4">Premium Collections</h2>
+      <p class="reveal text-vault-muted mt-4 max-w-xl mx-auto text-sm md:text-base font-light">Curated categories of elite resources, systems, and knowledge. Each collection is a world of its own.</p>
+    </div>
+    <div id="collectionsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5">
+      <!-- Collections will be injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FEATURED COLLECTIONS ==================== -->
+<section id="featured" class="relative z-10 py-16 md:py-32">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16 md:mb-24">
+      <span class="reveal text-vault-gold text-xs tracking-[0.3em] uppercase font-medium">Curated</span>
+      <h2 class="reveal font-display text-3xl sm:text-4xl md:text-6xl text-vault-text mt-4">Featured Collections</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="featuredGrid">
+      <!-- Featured collections injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ACCESS CTA ==================== -->
+<section class="relative z-10 py-16 md:py-32">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="reveal glass rounded-3xl p-10 md:p-16 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-vault-gold/5 to-transparent pointer-events-none"></div>
+      <div class="relative z-10">
+        <span class="text-vault-gold text-xs tracking-[0.3em] uppercase font-medium">Exclusive Access</span>
+        <h2 class="font-display text-3xl md:text-5xl text-vault-text mt-4 mb-4">Want Access To Any Collection?</h2>
+        <p class="text-vault-muted font-light mb-8 max-w-lg mx-auto">DM me on WhatsApp and get immediate entry to the vault. Your growth journey starts now.</p>
+        <a href="https://wa.me/923439114135?text=I%20want%20access%20to%20the%20vault" target="_blank" class="magnetic-btn inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] text-white font-semibold rounded-xl hover:bg-[#20BD5A] transition-all text-sm tracking-wider uppercase">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.881 11.881 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <span>WhatsApp: 03439114135</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT SECTION ==================== -->
+<section id="contact" class="relative z-10 py-16 md:py-32">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-12 md:gap-16">
+      <!-- Left -->
+      <div class="reveal">
+        <span class="text-vault-gold text-xs tracking-[0.3em] uppercase font-medium">Get In Touch</span>
+        <h2 class="font-display text-3xl md:text-5xl text-vault-text mt-4 mb-6">Contact Salman Growth Lab</h2>
+        <p class="text-vault-muted font-light mb-8 leading-relaxed">Have questions about the vault? Need help choosing the right collection? Reach out and we'll connect with you shortly.</p>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-vault-gold/10 border border-vault-gold/20 flex items-center justify-center">
+              <i data-lucide="phone" class="w-4 h-4 text-vault-gold"></i>
+            </div>
+            <span class="text-vault-text text-sm">03439114135</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-vault-gold/10 border border-vault-gold/20 flex items-center justify-center">
+              <i data-lucide="mail" class="w-4 h-4 text-vault-gold"></i>
+            </div>
+            <span class="text-vault-text text-sm">salmanmaseed2168@gmail.com</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-vault-gold/10 border border-vault-gold/20 flex items-center justify-center">
+              <i data-lucide="message-circle" class="w-4 h-4 text-vault-gold"></i>
+            </div>
+            <a href="https://wa.me/923439114135" target="_blank" class="text-vault-gold text-sm hover:text-vault-lgold transition-colors">Chat on WhatsApp</a>
+          </div>
+        </div>
+      </div>
+      <!-- Right - Form -->
+      <div class="reveal">
+        <form id="contactForm" class="glass rounded-2xl p-6 md:p-8 space-y-5" onsubmit="handleContactForm(event)">
+          <div>
+            <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Full Name</label>
+            <input type="text" name="name" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="Your full name">
+          </div>
+          <div>
+            <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Email Address</label>
+            <input type="email" name="email" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="your@email.com">
+          </div>
+          <div>
+            <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Phone Number</label>
+            <input type="tel" name="phone" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="+92 XXX XXXXXXX">
+          </div>
+          <div>
+            <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Message</label>
+            <textarea name="message" rows="4" required class="premium-input w-full px-4 py-3 rounded-lg text-sm resize-none" placeholder="How can we help?"></textarea>
+          </div>
+          <button type="submit" class="magnetic-btn w-full py-3 bg-vault-gold text-vault-bg font-semibold rounded-lg hover:bg-vault-lgold transition-all text-sm tracking-wider uppercase flex items-center justify-center gap-2">
+            <span id="contactBtnText">Send Message</span>
+            <i data-lucide="send" class="w-4 h-4"></i>
+          </button>
+          <div id="contactSuccess" class="hidden text-center py-4">
+            <div class="success-check inline-flex items-center justify-center w-12 h-12 rounded-full bg-vault-gold/20 mb-3">
+              <i data-lucide="check" class="w-6 h-6 text-vault-gold"></i>
+            </div>
+            <p class="text-vault-text font-display text-lg">Thank you for contacting Salman Growth Lab.</p>
+            <p class="text-vault-muted text-sm mt-1">We will reach out shortly.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="relative z-10 border-t border-vault-border py-12 md:py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-3 gap-8 mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-vault-gold/10 border border-vault-gold/30 flex items-center justify-center">
+            <span class="font-display text-vault-gold text-sm">S</span>
+          </div>
+          <span class="font-display text-vault-text text-lg">Salman Growth Lab</span>
+        </div>
+        <p class="text-vault-muted text-sm font-light leading-relaxed">The Ultimate Digital Growth Vault. Unlock Knowledge. Build Wealth. Create Freedom.</p>
+      </div>
+      <div>
+        <h4 class="text-vault-text text-xs tracking-[0.2em] uppercase font-semibold mb-4">Quick Links</h4>
+        <div class="space-y-2">
+          <a href="#collections" class="block text-vault-muted hover:text-vault-gold text-sm transition-colors">Collections</a>
+          <a href="#featured" class="block text-vault-muted hover:text-vault-gold text-sm transition-colors">Featured</a>
+          <a href="#value" class="block text-vault-muted hover:text-vault-gold text-sm transition-colors">Value Framework</a>
+          <a href="#contact" class="block text-vault-muted hover:text-vault-gold text-sm transition-colors">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-vault-text text-xs tracking-[0.2em] uppercase font-semibold mb-4">Connect</h4>
+        <div class="space-y-2">
+          <p class="text-vault-muted text-sm flex items-center gap-2"><i data-lucide="phone" class="w-3 h-3"></i> 03439114135</p>
+          <p class="text-vault-muted text-sm flex items-center gap-2"><i data-lucide="mail" class="w-3 h-3"></i> salmanmaseed2168@gmail.com</p>
+          <a href="https://wa.me/923439114135" target="_blank" class="text-vault-gold hover:text-vault-lgold text-sm transition-colors flex items-center gap-2">
+            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.881 11.881 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="section-divider mb-8"></div>
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-vault-muted text-xs tracking-wider">© Salman Growth Lab. All rights reserved.</p>
+      <p class="text-vault-muted/50 text-xs italic">Unlock Knowledge. Build Wealth. Create Freedom.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== WHATSAPP FLOATING BUTTON ==================== -->
+<a href="https://wa.me/923439114135?text=I%20want%20access%20to%20the%20vault" target="_blank" class="whatsapp-float group flex items-center gap-3" id="whatsappFloat">
+  <span class="hidden sm:flex items-center gap-2 px-4 py-2 bg-[#25D366]/10 border border-[#25D366]/30 rounded-lg text-[#25D366] text-xs tracking-wider group-hover:bg-[#25D366]/20 transition-all">
+    <span class="text-vault-muted">Need Instant Access?</span>
+    <span class="font-semibold">WhatsApp</span>
+  </span>
+  <div class="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-[#25D366]/20 group-hover:scale-110 transition-transform">
+    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.881 11.881 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </div>
+</a>
+
+<!-- ==================== COLLECTION DETAIL MODAL ==================== -->
+<div class="modal-overlay" id="collectionModal">
+  <div class="modal-content w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div class="glass rounded-2xl p-6 md:p-8 relative">
+      <button onclick="closeModal('collectionModal')" class="absolute top-4 right-4 text-vault-muted hover:text-vault-text transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div id="collectionModalContent">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== AUTH MODAL ==================== -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-content w-full max-w-md">
+    <div class="glass rounded-2xl p-6 md:p-8 relative">
+      <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-vault-muted hover:text-vault-text transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <!-- Auth Tabs -->
+      <div class="flex gap-4 mb-6 border-b border-vault-border pb-3">
+        <button onclick="setAuthTab('signin')" id="tabSignIn" class="text-sm font-medium tracking-wider uppercase pb-1 border-b-2 border-transparent text-vault-muted transition-all">Sign In</button>
+        <button onclick="setAuthTab('signup')" id="tabSignUp" class="text-sm font-medium tracking-wider uppercase pb-1 border-b-2 border-transparent text-vault-muted transition-all">Sign Up</button>
+      </div>
+      <!-- Sign In Form -->
+      <form id="signInForm" class="space-y-4" onsubmit="handleSignIn(event)" style="display:none">
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Email</label>
+          <input type="email" name="email" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="your@email.com">
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Password</label>
+          <input type="password" name="password" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="••••••••">
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-vault-gold">
+            <span class="text-vault-muted text-xs">Remember me</span>
+          </label>
+          <button type="button" onclick="setAuthTab('forgot')" class="text-vault-gold text-xs hover:text-vault-lgold transition-colors">Forgot password?</button>
+        </div>
+        <div id="signInError" class="hidden text-red-400 text-xs p-3 bg-red-400/10 border border-red-400/20 rounded-lg"></div>
+        <button type="submit" class="magnetic-btn w-full py-3 bg-vault-gold text-vault-bg font-semibold rounded-lg hover:bg-vault-lgold transition-all text-sm tracking-wider uppercase">Sign In</button>
+        <div class="section-divider my-2"></div>
+        <button type="button" class="w-full py-3 border border-vault-border text-vault-text rounded-lg hover:border-vault-gold/40 transition-all text-sm flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+        <div id="signInSuccess" class="hidden text-center py-4">
+          <div class="success-check inline-flex items-center justify-center w-10 h-10 rounded-full bg-vault-gold/20 mb-2">
+            <i data-lucide="check" class="w-5 h-5 text-vault-gold"></i>
+          </div>
+          <p class="text-vault-text text-sm">Welcome back to the Vault.</p>
+        </div>
+      </form>
+      <!-- Sign Up Form -->
+      <form id="signUpForm" class="space-y-4" onsubmit="handleSignUp(event)" style="display:none">
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Full Name</label>
+          <input type="text" name="name" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="Your full name">
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Authorized Email</label>
+          <input type="email" name="email" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="your@email.com">
+          <div id="signUpEmailError" class="hidden text-red-400 text-xs mt-1"></div>
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Phone Number</label>
+          <input type="tel" name="phone" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="+92 XXX XXXXXXX">
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Password</label>
+          <input type="password" name="password" required minlength="6" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="Min 6 characters">
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Professional Intent</label>
+          <input type="text" name="intent" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="What scaling model are you deploying?">
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Qualification Status</label>
+          <textarea name="qualification" rows="2" class="premium-input w-full px-4 py-3 rounded-lg text-sm resize-none" placeholder="Briefly outline your background & focus"></textarea>
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Weekly Capacity (Hours)</label>
+          <select name="capacity" class="premium-input w-full px-4 py-3 rounded-lg text-sm">
+            <option value="">Select hours per week</option>
+            <option value="1-5">1-5 hours</option>
+            <option value="5-10">5-10 hours</option>
+            <option value="10-20">10-20 hours</option>
+            <option value="20-40">20-40 hours</option>
+            <option value="40+">40+ hours</option>
+          </select>
+        </div>
+        <div id="signUpError" class="hidden text-red-400 text-xs p-3 bg-red-400/10 border border-red-400/20 rounded-lg"></div>
+        <button type="submit" class="magnetic-btn w-full py-3 bg-vault-gold text-vault-bg font-semibold rounded-lg hover:bg-vault-lgold transition-all text-sm tracking-wider uppercase">Create Account</button>
+        <div id="signUpSuccess" class="hidden text-center py-4">
+          <div class="success-check inline-flex items-center justify-center w-10 h-10 rounded-full bg-vault-gold/20 mb-2">
+            <i data-lucide="check" class="w-5 h-5 text-vault-gold"></i>
+          </div>
+          <p class="text-vault-text text-sm">Your request has been received.</p>
+          <p class="text-vault-muted text-xs mt-1">We will contact you soon.</p>
+        </div>
+      </form>
+      <!-- Forgot Password Form -->
+      <form id="forgotForm" class="space-y-4" onsubmit="handleForgot(event)" style="display:none">
+        <div class="text-center mb-4">
+          <i data-lucide="lock" class="w-8 h-8 text-vault-gold mx-auto mb-3"></i>
+          <h3 class="font-display text-xl text-vault-text">Reset Password</h3>
+          <p class="text-vault-muted text-xs mt-1">Enter your email to receive a reset link.</p>
+        </div>
+        <div>
+          <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Email</label>
+          <input type="email" name="email" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="your@email.com">
+        </div>
+        <button type="submit" class="magnetic-btn w-full py-3 bg-vault-gold text-vault-bg font-semibold rounded-lg hover:bg-vault-lgold transition-all text-sm tracking-wider uppercase">Send Reset Link</button>
+        <button type="button" onclick="setAuthTab('signin')" class="w-full py-2 text-vault-muted hover:text-vault-gold text-xs transition-colors">← Back to Sign In</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// ===== EMAILJS INIT =====
+emailjs.init('mM2hBZV2_KJXywPCG');
+
+const EMAILJS_SERVICE_ID = 'service_9icf1y9';
+const EMAILJS_TEMPLATE_ID = 'template_4eqx4vb';
+
+// ===== EMAIL VALIDATION =====
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+function validateEmail(email) {
+  return EMAIL_REGEX.test(email);
+}
+
+// ===== SEND EMAIL FUNCTION =====
+async function sendVaultNotification(payload) {
+  const templateParams = {
+    submission_type: payload.type,
+    user_name: payload.name,
+    user_email: payload.email,
+    user_phone: payload.phone || 'Not Provided',
+    user_country: payload.country || 'Not Specified',
+    user_message: payload.message || 'No additional info shared.',
+  };
+  try {
+    const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY);
+    return response.status === 200;
+  } catch (error) {
+    console.error('[Vault Mailer Error]:', error);
+    return false;
+  }
+}
+const EMAILJS_PUBLIC_KEY = 'mM2hBZV2_KJXywPCG';
+
+// ===== COLLECTIONS DATA =====
+const collections = [
+  { id:'ai', name:'AI & Automation', icon:'cpu', desc:'Master AI tools, automation systems, and intelligent frameworks.', count:'50+ Resources', img:'technology' },
+  { id:'youtube', name:'YouTube Growth', icon:'play-circle', desc:'Scale your channel with proven strategies and systems.', count:'80+ Resources', img:'education' },
+  { id:'content', name:'Content Creation', icon:'pen-tool', desc:'Create compelling content that converts and engages.', count:'60+ Resources', img:'studio' },
+  { id:'video', name:'Video Editing', icon:'film', desc:'Professional editing techniques, templates, and assets.', count:'40+ Resources', img:'technology' },
+  { id:'design', name:'Graphic Design', icon:'palette', desc:'Premium design assets, templates, and creative systems.', count:'70+ Resources', img:'abstract' },
+  { id:'trading', name:'Trading & Investing', icon:'trending-up', desc:'Intelligent trading systems and investment frameworks.', count:'35+ Resources', img:'finance' },
+  { id:'amazon', name:'Amazon Business', icon:'shopping-bag', desc:'Build and scale your Amazon empire systematically.', count:'45+ Resources', img:'retail' },
+  { id:'shopify', name:'Shopify & Ecommerce', icon:'store', desc:'Launch and grow your ecommerce store to 7 figures.', count:'55+ Resources', img:'retail' },
+  { id:'marketing', name:'Digital Marketing', icon:'megaphone', desc:'Dominate digital marketing with proven strategies.', count:'90+ Resources', img:'marketing' },
+  { id:'seo', name:'SEO Mastery', icon:'search', desc:'Rank #1 and drive organic traffic systematically.', count:'40+ Resources', img:'science' },
+  { id:'affiliate', name:'Affiliate Marketing', icon:'link', desc:'Build passive income through affiliate systems.', count:'50+ Resources', img:'finance' },
+  { id:'freelancing', name:'Freelancing', icon:'briefcase', desc:'Build a premium freelance career from scratch.', count:'65+ Resources', img:'workspace' },
+  { id:'fiverr', name:'Fiverr Mastery', icon:'star', desc:'Dominate Fiverr and build a 6-figure freelance business.', count:'30+ Resources', img:'craft' },
+  { id:'upwork', name:'Upwork Authority', icon:'award', desc:'Become a top-rated Upwork professional.', count:'30+ Resources', img:'workspace' },
+  { id:'blogging', name:'Blogging Empire', icon:'file-text', desc:'Build profitable blogs that generate passive income.', count:'40+ Resources', img:'education' },
+  { id:'copywriting', name:'Copywriting', icon:'type', desc:'Write words that sell, persuade, and convert.', count:'45+ Resources', img:'education' },
+  { id:'photography', name:'Photography', icon:'aperture', desc:'Master photography and build a visual brand.', count:'35+ Resources', img:'nature' },
+  { id:'branding', name:'Personal Branding', icon:'user-check', desc:'Build an authoritative personal brand that commands attention.', count:'50+ Resources', img:'people' },
+  { id:'business', name:'Business Development', icon:'building', desc:'Strategic frameworks for building and scaling businesses.', count:'55+ Resources', img:'industry' },
+  { id:'ebooks', name:'Premium Ebook Library', icon:'book-open', desc:'Curated collection of premium ebooks and guides.', count:'100+ Resources', img:'education' },
+  { id:'templates', name:'Templates & Resources', icon:'layout-template', desc:'Ready-to-use templates for every business need.', count:'80+ Resources', img:'minimal' },
+  { id:'digital', name:'Digital Assets', icon:'layers', desc:'Premium digital assets, icons, graphics, and bundles.', count:'60+ Resources', img:'abstract' },
+  { id:'software', name:'Software & Tools', icon:'wrench', desc:'Essential software tools and productivity systems.', count:'30+ Resources', img:'technology' },
+];
+
+const featuredCollections = [
+  { id:'f-ai', name:'AI Empire Collection', icon:'cpu', desc:'The ultimate AI resource vault. Master automation, intelligence systems, and next-gen tools.', tag:'Most Popular', img:'technology/1200x630/42' },
+  { id:'f-yt', name:'YouTube Growth Vault', icon:'play-circle', desc:'Everything you need to build, grow, and monetize a YouTube channel from zero to millions.', tag:'Best Seller', img:'education/1200x630/88' },
+  { id:'f-free', name:'Freelancer Success Systems', icon:'briefcase', desc:'Complete freelancing ecosystem — Fiverr, Upwork, and independent consulting frameworks.', tag:'Premium', img:'workspace/1200x630/55' },
+  { id:'f-trade', name:'Trading Intelligence Collection', icon:'trending-up', desc:'Advanced trading systems, market analysis frameworks, and investment intelligence.', tag:'Elite', img:'finance/1200x630/77' },
+  { id:'f-mkt', name:'Marketing Domination Suite', icon:'megaphone', desc:'Full-stack marketing mastery — SEO, affiliate, content, and digital advertising.', tag:'Comprehensive', img:'marketing/1200x630/33' },
+  { id:'f-ecom', name:'Ecommerce Accelerator', icon:'store', desc:'Shopify, Amazon, and dropshipping systems for rapid ecommerce growth.', tag:'Growth', img:'retail/1200x630/99' },
+];
+
+// ===== RENDER COLLECTIONS =====
+function renderCollections() {
+  const grid = document.getElementById('collectionsGrid');
+  grid.innerHTML = collections.map((c, i) => `
+    <div class="reveal collection-card glass rounded-xl p-5 cursor-pointer relative group" onclick="openCollectionModal('${c.id}')" style="animation-delay:${i * 50}ms" onmousemove="trackCardMouse(event, this)" onmouseleave="resetCardMouse(this)">
+      <div class="card-glow" style="--mx:50%;--my:50%"></div>
+      <div class="relative z-10">
+        <div class="flex items-start justify-between mb-3">
+          <div class="w-10 h-10 rounded-lg bg-vault-gold/10 border border-vault-gold/20 flex items-center justify-center">
+            <i data-lucide="${c.icon}" class="w-4 h-4 text-vault-gold"></i>
+          </div>
+          <span class="text-vault-muted text-[10px] tracking-widest uppercase">${c.count}</span>
+        </div>
+        <h3 class="font-display text-lg text-vault-text mb-2">${c.name}</h3>
+        <p class="text-vault-muted text-xs font-light leading-relaxed">${c.desc}</p>
+        <div class="mt-4 flex items-center gap-1 text-vault-gold text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+          <span>Reserve Access</span>
+          <i data-lucide="arrow-right" class="w-3 h-3"></i>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ===== RENDER FEATURED =====
+function renderFeatured() {
+  const grid = document.getElementById('featuredGrid');
+  grid.innerHTML = featuredCollections.map((c, i) => `
+    <div class="reveal featured-card rounded-2xl h-72 md:h-80 relative cursor-pointer overflow-hidden border border-vault-border group" onclick="openCollectionModal('${c.id}')" style="background-image:url('http://static.photos/${c.img}');background-size:cover;background-position:center">
+      <div class="featured-overlay"></div>
+      <div class="featured-shine"></div>
+      <div class="absolute inset-0 z-10 flex flex-col justify-end p-6">
+        <span class="inline-flex self-start items-center px-2 py-1 rounded-md bg-vault-gold/20 border border-vault-gold/30 text-vault-gold text-[10px] tracking-widest uppercase mb-3">${c.tag}</span>
+        <h3 class="font-display text-xl md:text-2xl text-vault-text mb-2">${c.name}</h3>
+        <p class="text-vault-muted text-xs font-light leading-relaxed line-clamp-2">${c.desc}</p>
+        <div class="mt-3 flex items-center gap-1 text-vault-gold text-xs font-medium group-hover:gap-2 transition-all">
+          <span>Explore Collection</span>
+          <i data-lucide="arrow-right" class="w-3 h-3"></i>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+// ===== COLLECTION MODAL =====
+let currentCollectionId = null;
+
+function openCollectionModal(id) {
+  currentCollectionId = id;
+  const c = collections.find(x => x.id === id) || featuredCollections.find(x => x.id === id);
+  if (!c) return;
+  
+  const content = document.getElementById('collectionModalContent');
+  content.innerHTML = `
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 rounded-xl bg-vault-gold/10 border border-vault-gold/20 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="${c.icon || 'lock'}" class="w-6 h-6 text-vault-gold"></i>
+      </div>
+      <h3 class="font-display text-2xl text-vault-text">${c.name}</h3>
+      <p class="text-vault-muted text-xs mt-2">${c.desc}</p>
+    </div>
+    <div class="section-divider my-5"></div>
+    <div class="text-center mb-4">
+      <span class="text-vault-gold text-xs tracking-[0.2em] uppercase font-medium">Reserve Your Access</span>
+      <p class="text-vault-muted text-[11px] mt-1">Complete the form to request entry to this collection.</p>
+    </div>
+    <form id="reserveForm" class="space-y-4" onsubmit="handleReserve(event)">
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Full Name *</label>
+        <input type="text" name="name" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="Your full name">
+      </div>
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Authorized Corporate Email *</label>
+        <input type="email" name="email" required class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="your@company.com">
+        <div id="reserveEmailError" class="hidden text-red-400 text-xs mt-1 p-2 bg-red-400/10 border border-red-400/20 rounded-lg"></div>
+      </div>
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Phone Number</label>
+        <input type="tel" name="phone" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="+92 XXX XXXXXXX">
+      </div>
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Country</label>
+        <input type="text" name="country" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="Pakistan">
+      </div>
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Professional Intent</label>
+        <input type="text" name="intent" class="premium-input w-full px-4 py-3 rounded-lg text-sm" placeholder="What scaling model are you deploying?">
+      </div>
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Qualification Status</label>
+        <textarea name="qualification" rows="2" class="premium-input w-full px-4 py-3 rounded-lg text-sm resize-none" placeholder="Outline your background & primary focus"></textarea>
+      </div>
+      <div>
+        <label class="text-vault-muted text-xs tracking-widest uppercase mb-2 block">Weekly Capacity</label>
+        <select name="capacity" class="premium-input w-full px-4 py-3 rounded-lg text-sm">
+          <option value="">Select hours per week</option>
+          <option value="1-5">1-5 hours</option>
+          <option value="5-10">5-10 hours</option>
+          <option value="10-20">10-20 hours</option>
+          <option value="20-40">20-40 hours</option>
+          <option value="40+">40+ hours</option>
+        </select>
+      </div>
+      <input type="hidden" name="collection" value="${c.name}">
+      <div id="reserveError" class="hidden text-red-400 text-xs p-3 bg-red-400/10 border border-red-400/20 rounded-lg"></div>
+      <button type="submit" id="reserveBtn" class="magnetic-btn w-full py-3 bg-vault-gold text-vault-bg font-semibold rounded-lg hover:bg-vault-lgold transition-all text-sm tracking-wider uppercase flex items-center justify-center gap-2">
+        <span>Reserve My Access</span>
+        <i data-lucide="lock-open" class="w-4 h-4"></i>
+      </button>
+    </form>
+    <div id="reserveSuccess" class="hidden text-center py-6">
+      <div class="success-check inline-flex items-center justify-center w-16 h-16 rounded-full bg-vault-gold/20 border border-vault-gold/30 mb-4">
+        <i data-lucide="check" class="w-8 h-8 text-vault-gold"></i>
+      </div>
+      <h3 class="font-display text-xl text-vault-text mb-2">Access Reserved</h3>
+      <p class="text-vault-muted text-sm">Thank you for your interest. Your request has been received.</p>
+      <p class="text-vault-gold text-sm font-medium mt-1">We will contact you soon.</p>
+      <div class="section-divider my-5"></div>
+      <div class="glass rounded-xl p-4 text-left">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 rounded-lg bg-vault-gold/10 flex items-center justify-center">
+            <i data-lucide="shield" class="w-4 h-4 text-vault-gold"></i>
+          </div>
+          <span class="text-vault-text text-xs font-medium tracking-wider uppercase">Security Verification</span>
+        </div>
+        <p class="text-vault-muted text-xs leading-relaxed">For enhanced security, link Google Authenticator to your account. Scan the QR code below using the Google Authenticator app to enable 2FA before access parameters are finalized.</p>
+        <div class="mt-3 flex items-center justify-center">
+          <div class="w-32 h-32 bg-white rounded-lg p-2 flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+              <rect x="5" y="5" width="90" height="90" fill="white" stroke="#ccc" stroke-width="1"/>
+              <rect x="15" y="15" width="25" height="25" fill="black"/><rect x="20" y="20" width="15" height="15" fill="white"/><rect x="23" y="23" width="9" height="9" fill="black"/>
+              <rect x="60" y="15" width="25" height="25" fill="black"/><rect x="65" y="20" width="15" height="15" fill="white"/><rect x="68" y="23" width="9" height="9" fill="black"/>
+              <rect x="15" y="60" width="25" height="25" fill="black"/><rect x="20" y="65" width="15" height="15" fill="white"/><rect x="23" y="68" width="9" height="9" fill="black"/>
+              <rect x="45" y="45" width="10" height="10" fill="black"/><rect x="50" y="35" width="5" height="5" fill="black"/><rect x="40" y="55" width="5" height="5" fill="black"/>
+              <rect x="60" y="60" width="25" height="25" fill="black"/><rect x="65" y="65" width="15" height="15" fill="white"/><rect x="68" y="68" width="9" height="9" fill="black"/>
+            </svg>
+          </div>
+        </div>
+        <p class="text-center text-vault-muted text-[10px] mt-2">Scan with Google Authenticator</p>
+      </div>
+    </div>
+  `;
+  lucide.createIcons();
+  openModal('collectionModal');
+}
+
+// ===== FORM HANDLERS =====
+async function handleReserve(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value.trim();
+  
+  // Clear previous errors
+  document.getElementById('reserveError').classList.add('hidden');
+  document.getElementById('reserveEmailError').classList.add('hidden');
+  form.email.classList.remove('error');
+
+  // Email validation
+  if (!validateEmail(email)) {
+    form.classList.add('shake');
+    form.email.classList.add('error');
+    const emailErr = document.getElementById('reserveEmailError');
+    emailErr.innerHTML = 'Access Denied: You have entered an invalid or incorrect email address format. Please check the right email otherwise it would not be accepted.';
+    emailErr.classList.remove('hidden');
+    setTimeout(() => form.classList.remove('shake'), 500);
+    return;
+  }
+
+  const payload = {
+    type: 'Vault Reservation',
+    name: form.name.value.trim(),
+    email: email,
+    phone: form.phone.value.trim() || undefined,
+    country: form.country.value.trim() || undefined,
+    message: `Collection: ${form.collection.value}. Intent: ${form.intent.value || 'N/A'}. Qualification: ${form.qualification.value || 'N/A'}. Capacity: ${form.capacity.value || 'N/A'}`,
+  };
+
+  const btn = document.getElementById('reserveBtn');
+  btn.innerHTML = '<span>Sending...</span>';
+  btn.disabled = true;
+
+  const success = await sendVaultNotification(payload);
+  
+  if (success) {
+    form.style.display = 'none';
+    document.getElementById('reserveSuccess').classList.remove('hidden');
+    lucide.createIcons();
+  } else {
+    document.getElementById('reserveError').textContent = 'There was an error sending your request. Please try again.';
+    document.getElementById('reserveError').classList.remove('hidden');
+    btn.innerHTML = '<span>Reserve My Access</span><i data-lucide="lock-open" class="w-4 h-4"></i>';
+    btn.disabled = false;
+    lucide.createIcons();
+  }
+}
+
+async function handleContactForm(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value.trim();
+
+  if (!validateEmail(email)) {
+    form.email.classList.add('error');
+    form.classList.add('shake');
+    setTimeout(() => { form.classList.remove('shake'); form.email.classList.remove('error'); }, 500);
+    return;
+  }
+
+  const payload = {
+    type: 'Contact Message',
+    name: form.name.value.trim(),
+    email: email,
+    phone: form.phone.value.trim() || undefined,
+    message: form.message.value.trim(),
+  };
+
+  const btnText = document.getElementById('contactBtnText');
+  btnText.textContent = 'Sending...';
+  
+  const success = await sendVaultNotification(payload);
+  
+  if (success) {
+    form.querySelectorAll('input, textarea').forEach(el => el.style.display = 'none');
+    form.querySelector('button').style.display = 'none';
+    document.getElementById('contactSuccess').classList.remove('hidden');
+  } else {
+    btnText.textContent = 'Send Message';
+    alert('There was an error. Please try again.');
+  }
+}
+
+async function handleSignUp(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value.trim();
+
+  document.getElementById('signUpError').classList.add('hidden');
+  document.getElementById('signUpEmailError').classList.add('hidden');
+  form.email.classList.remove('error');
+
+  if (!validateEmail(email)) {
+    form.classList.add('shake');
+    form.email.classList.add('error');
+    const emailErr = document.getElementById('signUpEmailError');
+    emailErr.innerHTML = 'Access Denied: You have entered an invalid or incorrect email address format. Please check the right email otherwise it would not be accepted.';
+    emailErr.classList.remove('hidden');
+    setTimeout(() => form.classList.remove('shake'), 500);
+    return;
+  }
+
+  const payload = {
+    type: 'User Sign Up',
+    name: form.name.value.trim(),
+    email: email,
+    phone: form.phone.value.trim() || undefined,
+    message: `Intent: ${form.intent.value || 'N/A'}. Qualification: ${form.qualification.value || 'N/A'}. Capacity: ${form.capacity.value || 'N/A'}`,
+  };
+
+  const success = await sendVaultNotification(payload);
+  
+  if (success) {
+    form.style.display = 'none';
+    document.getElementById('signUpSuccess').classList.remove('hidden');
+  } else {
+    document.getElementById('signUpError').textContent = 'System Rejection: This email address does not match our authorized records. Access denied due to incorrect address configuration.';
+    document.getElementById('signUpError').classList.remove('hidden');
+    form.classList.add('shake');
+    setTimeout(() => form.classList.remove('shake'), 500);
+  }
+}
+
+async function handleSignIn(e) {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value.trim();
+
+  document.getElementById('signInError').classList.add('hidden');
+  form.email.classList.remove('error');
+
+  if (!validateEmail(email)) {
+    form.classList.add('shake');
+    form.email.classList.add('error');
+    const err = document.getElementById('signInError');
+    err.innerHTML = 'Access Denied: You have entered an invalid or incorrect email address format. Please check the right email otherwise it would not be accepted.';
+    err.classList.remove('hidden');
+    setTimeout(() => form.classList.remove('shake'), 500);
+    return;
+  }
+
+  const payload = {
+    type: 'User Sign In',
+    name: 'User',
+    email: email,
+    message: 'Sign in attempt',
+  };
+
+  const success = await sendVaultNotification(payload);
+  
+  if (success) {
+    form.style.display = 'none';
+    document.getElementById('signInSuccess').classList.remove('hidden');
+  } else {
+    document.getElementById('signInError').innerHTML = 'System Rejection: This email address does not match our authorized records. Access denied due to incorrect address configuration.';
+    document.getElementById('signInError').classList.remove('hidden');
+    form.classList.add('shake');
+    setTimeout(() => form.classList.remove('shake'), 500);
+  }
+}
+
+async function handleForgot(e) {
+  e.preventDefault();
+  alert('Password reset link has been sent to your email if an account exists.');
+}
+
+// ===== AUTH TABS =====
+function setAuthTab(tab) {
+  ['signInForm','signUpForm','forgotForm'].forEach(id => document.getElementById(id).style.display = 'none');
+  ['tabSignIn','tabSignUp'].forEach(id => { const el = document.getElementById(id); el.classList.remove('border-vault-gold','text-vault-text'); el.classList.add('border-transparent','text-vault-muted'); });
+  
+  if (tab === 'signin') {
+    document.getElementById('signInForm').style.display = 'block';
+    document.getElementById('tabSignIn').classList.remove('border-transparent','text-vault-muted');
+    document.getElementById('tabSignIn').classList.add('border-vault-gold','text-vault-text');
+  } else if (tab === 'signup') {
+    document.getElementById('signUpForm').style.display = 'block';
+    document.getElementById('tabSignUp').classList.remove('border-transparent','text-vault-muted');
+    document.getElementById('tabSignUp').classList.add('border-vault-gold','text-vault-text');
+  } else if (tab === 'forgot') {
+    document.getElementById('forgotForm').style.display = 'block';
+  }
+}
+
+// ===== MODALS =====
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===== MOBILE NAV =====
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+// ===== SMOOTH SCROLL =====
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== CUSTOM CURSOR =====
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorDot.style.left = mouseX - 3 + 'px';
+  cursorDot.style.top = mouseY - 3 + 'px';
+});
+
+function animateCursorRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.left = ringX - 18 + 'px';
+  cursorRing.style.top = ringY - 18 + 'px';
+  requestAnimationFrame(animateCursorRing);
+}
+animateCursorRing();
+
+// Magnetic & hover effects for cursor
+document.addEventListener('mouseover', (e) => {
+  if (e.target.closest('.magnetic-btn, a, button, input, textarea, select, .collection-card')) {
+    cursorRing.classList.add('hovering');
+  }
+});
+document.addEventListener('mouseout', (e) => {
+  if (e.target.closest('.magnetic-btn, a, button, input, textarea, select, .collection-card')) {
+    cursorRing.classList.remove('hovering');
+  }
+});
+
+// ===== CARD MOUSE TRACKING =====
+function trackCardMouse(e, el) {
+  const rect = el.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width) * 100;
+  const y = ((e.clientY - rect.top) / rect.height) * 100;
+  const glow = el.querySelector('.card-glow');
+  if (glow) { glow.style.setProperty('--mx', x + '%'); glow.style.setProperty('--my', y + '%'); }
+}
+function resetCardMouse(el) {
+  const glow = el.querySelector('.card-glow');
+  if (glow) { glow.style.setProperty('--mx', '50%'); glow.style.setProperty('--my', '50%'); }
+}
+
+// ===== PARTICLES =====
+const particleCanvas = document.getElementById('particles');
+const pCtx = particleCanvas.getContext('2d');
+let particles = [];
+
+function resizeParticles() {
+  particleCanvas.width = window.innerWidth;
+  particleCanvas.height = window.innerHeight;
+}
+resizeParticles();
+window.addEventListener('resize', resizeParticles);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * particleCanvas.width;
+    this.y = Math.random() * particleCanvas.height;
+    this.size = Math.random() * 1.5 + 0.3;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.4 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > particleCanvas.width || this.y < 0 || this.y > particleCanvas.height) this.reset();
+  }
+  draw() {
+    pCtx.beginPath();
+    pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    pCtx.fillStyle = `rgba(212,169,106,${this.opacity})`;
+    pCtx.fill();
+  }
+}
+
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+function animateParticles() {
+  pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ===== SCROLL PROGRESS =====
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('scrollProgress').style.width = progress + '%';
+});
+
+// ===== NAVBAR SCROLL EFFECT =====
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  const scrollY = window.scrollY;
+  if (scrollY > 100) {
+    nav.classList.add('glass');
+    nav.style.borderBottom = '1px solid rgba(42,42,44,0.5)';
+  } else {
+    nav.classList.remove('glass');
+    nav.style.borderBottom = 'none';
+  }
+  if (scrollY > lastScrollY && scrollY > 200) {
+    nav.style.transform = 'translateY(-100%)';
+  } else {
+    nav.style.transform = 'translateY(0)';
+  }
+  lastScrollY = scrollY;
+});
+
+// ===== REVEAL ANIMATIONS =====
+function handleReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    const trigger = window.innerHeight * 0.88;
+    if (top < trigger) el.classList.add('active');
+  });
+}
+window.addEventListener('scroll', handleReveal);
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  document.querySelectorAll('.counter-number[data-target]').forEach(counter => {
+    const target = parseInt(counter.dataset.target);
+    const increment = target / 60;
+    let current = 0;
+    const update = () => {
+      current += increment;
+      if (current < target) {
+        counter.textContent = Math.ceil(current) + '+';
+        requestAnimationFrame(update);
+      } else {
+        counter.textContent = target + '+';
+      }
+    };
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { update(); observer.disconnect(); }
+    }, { threshold: 0.5 });
+    observer.observe(counter);
+  });
+}
+
+// ===== MAGNETIC BUTTONS =====
+document.addEventListener('mousemove', (e) => {
+  document.querySelectorAll('.magnetic-btn').forEach(btn => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const dist = Math.sqrt(x * x + y * y);
+    if (dist < 80) {
+      const strength = 1 - (dist / 80);
+      btn.style.transform = `translate(${x * strength * 0.2}px, ${y * strength * 0.2}px)`;
+    } else {
+      btn.style.transform = '';
+    }
+  });
+});
+
+// ===== SMOOTH ANCHOR SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ===== CLOSE MODAL ON OVERLAY CLICK =====
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+});
+
+// ===== LOADER =====
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const loader = document.getElementById('loader');
+    loader.style.opacity = '0';
+    loader.style.transition = 'opacity 0.6s ease';
+    setTimeout(() => { loader.style.display = 'none'; }, 600);
+  }, 1500);
+  
+  // Init
+  renderCollections();
+  renderFeatured();
+  setAuthTab('signin');
+  animateCounters();
+  handleReveal();
+  lucide.createIcons();
+});
+
+// ===== GSAP SCROLL ANIMATIONS =====
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero parallax
+gsap.to('#hero .relative', {
+  scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+  y: 100,
+  opacity: 0.5,
+});
+
+// Value pillars stagger
+gsap.utils.toArray('#value .reveal').forEach((el, i) => {
+  gsap.from(el, {
+    scrollTrigger: { trigger: el, start: 'top 85%' },
+    y: 40,
+    opacity: 0,
+    duration: 0.8,
+    delay: i * 0.1,
+    ease: 'power3.out'
+  });
+});
+</script>
+
+<script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
+</html>
